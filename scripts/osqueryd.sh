@@ -1,1 +1,1 @@
-osqueryd --flagfile=conf/osquery.flags
+osqueryd --flagfile=config/osqueryd.flags

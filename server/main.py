@@ -34,6 +34,7 @@ HTTP_SERVER_KEY = os.path.join(ROOT_DIR, "cert", "test.code-workspace.cloud.key"
 HTTP_SERVER_CA = os.path.join(ROOT_DIR, "cert", "test.code-workspace.cloud_root.crt")
 HTTP_SERVER_USE_ENROLL_SECRET = True
 HTTP_SERVER_ENROLL_SECRET = os.path.join(ROOT_DIR, "config", "enroll_secret")
+HTTP_SERVER_PORT = 8080
 
 # Global accessor value for arguments passed to the server
 ARGS = None
@@ -370,7 +371,7 @@ def reset_timeout():
     TIMEOUT_TIMER.start()
 
 
-def run_http_server(bind_port=80, **kwargs):
+def run_http_server(bind_port=HTTP_SERVER_PORT, **kwargs):
     global HTTP_SERVER_ENROLL_SECRET
     global ARGS
     ARGS = kwargs
@@ -431,17 +432,17 @@ if __name__ == '__main__':
     parser.add_argument(
         "--cert",
         metavar="CERT_FILE",
-        default=None,
+        default=HTTP_SERVER_CERT,
         help="TLS server cert.")
     parser.add_argument(
         "--key",
         metavar="PRIVATE_KEY_FILE",
-        default=None,
+        default=HTTP_SERVER_KEY,
         help="TLS server cert private key.")
     parser.add_argument(
         "--ca",
         metavar="CA_FILE",
-        default=None,
+        default=HTTP_SERVER_CA,
         help="TLS server CA list for client-auth.")
 
     parser.add_argument(
@@ -452,29 +453,17 @@ if __name__ == '__main__':
     parser.add_argument(
         "--enroll_secret",
         metavar="SECRET_FILE",
-        default=None,
+        default=HTTP_SERVER_ENROLL_SECRET,
         help="File containing enrollment secret")
-    parser.add_argument(
-        "--test-configs-dir",
-        required=True,
-        help="Directory where the script will search for configuration files it needs")
 
     parser.add_argument(
-        "port", metavar="PORT", type=int, help="Bind to which local TCP port.")
+        "--port",
+        metavar="PORT",
+        default=HTTP_SERVER_PORT,
+        type=int,
+        help="Bind to which local TCP port.")
 
     args = parser.parse_args()
-
-    if args.cert is None:
-        args.cert = "%s/%s" % (args.test_configs_dir, HTTP_SERVER_CERT)
-
-    if args.key is None:
-        args.key = "%s/%s" % (args.test_configs_dir, HTTP_SERVER_KEY)
-
-    if args.ca is None:
-        args.ca = "%s/%s" % (args.test_configs_dir, HTTP_SERVER_CA)
-
-    if args.enroll_secret is None:
-        args.enroll_secret = "%s/%s" % (args.test_configs_dir, HTTP_SERVER_ENROLL_SECRET)
 
     nonempty_args = {
         k: v

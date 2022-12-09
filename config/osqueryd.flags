@@ -4,7 +4,7 @@
 
 --tls_dump=true
 --tls_server_certs=cert/test.code-workspace.cloud_bundle.crt
---tls_hostname=test.code-workspace.cloud
+--tls_hostname=test.code-workspace.cloud:8080
 
 --enroll_secret_path=conf/enroll_secret
 --enroll_tls_endpoint=/enroll
