@@ -3,3 +3,4 @@ build
 osquery.egg-info
 dist
 .eggs
+.idea/
