@@ -3,19 +3,21 @@
 --host_identifier=uuid
 
 --tls_dump=true
---tls_server_certs=cert/test.code-workspace.cloud_bundle.crt
+--tls_client_key=cert/test.code-workspace.cloud.key
+--tls_client_cert=cert/test.code-workspace.cloud_bundle.pem
 --tls_hostname=test.code-workspace.cloud:8080
+--tls_enroll_max_interval=1
 
---enroll_secret_path=conf/enroll_secret
+--enroll_secret_path=config/enroll_secret
 --enroll_tls_endpoint=/enroll
 
 --config_plugin=tls
 --config_tls_endpoint=/config
---config_refresh=10
+--config_refresh=1
 
 --disable_distributed=false
 --distributed_plugin=tls
---distributed_interval=10
+--distributed_interval=1
 --distributed_tls_max_attempts=3
 --distributed_tls_read_endpoint=/distributed_read
 --distributed_tls_write_endpoint=/distributed_write
